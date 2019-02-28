@@ -1,10 +1,42 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends "shared/base.html" %}
 
-</body>
-</html>
+{% block content %}
+<h3>{{ restaurant.name }}</h3>
+<form method="POST" class="form-horizontal" role="form" action="/submitReview/{{restaurant.restaurant_id}}">
+    {% csrf_token %}
+    <div class="form-group">
+
+        <label for="rating">Rating:</label>
+        <input type="number" max='5' min='1' class="form-control form-control1 form-control2"
+               id="rating" name="rating" value=""
+               required="required">
+    </div>
+
+    <div class="form-group">
+        <!--label class="col-md-4 control-label">ÃÜÂë</label-->
+        <label for="price">Price:</label>
+        <input type="number" class="form-control form-control1 form-control2"
+               id="price" name="price" value=""
+               required="required">
+    </div>
+
+    <div class="form-group">
+        <!--label class="col-md-4 control-label">ÃÜÂë</label-->
+        <label for="description">Description:</label>
+        <textarea class="form-control" rows="3" name="description" id="description"></textarea>
+        <div class="help-block with-errors"></div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-10">
+            <label class="checkbox-inline">
+                <input type="submit" value="Submit" class="btn btn-primary btn-block btn-btn1">
+            </label>
+            <label class="checkbox-inline">
+                <input type="reset" value="Reset" class="btn btn-primary btn-block btn-btn1">
+            </label>
+
+        </div>
+    </div>
+</form>
+{% endblock %}

@@ -1,5 +1,76 @@
 {% extends "shared/base.html" %}
 
 {% block content %}
-<h1>{{ name }}</h1>
+<div class="row clearfix">
+    <div class="col-xs-14 column">
+        <div class="panel-body" style="padding-bottom: 0px;">
+            <div class="panel panel-default">
+                <div class="panel-heading"><h4>{{ review.restaurant.name }}</h4></div>
+                <div class="panel-body">
+                    <h4>User:{{ review.user.user_name }}</h4>
+                    <h4>Date:{{ review.date }}</h4>
+                    <h4>Rating:
+                        {% for i in range %}
+                        <span class="fa fa-star" style="color: orange;"></span>
+                        {% endfor %}
+                    </h4>
+
+                    <h4>Price:{{ review.price }}</h4>
+                    <h4>Description:{{ review.description }}</h4>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<form method="POST" class="form-horizontal" role="form" action="/comment/{{review.review_id}}">
+    {% csrf_token %}
+    <div class="form-group">
+        <label for="comment">Comment:</label>
+        <textarea class="form-control" rows="3" id="comment" name="comment"></textarea>
+    </div>
+    <div class="form-group pull-right">
+        <input type="submit" value="Submit" class="btn btn-primary btn-block btn-btn1">
+    </div>
+</form>
+
+<div class="row">
+    <div class="page-header">
+        <h3>
+            Comments
+        </h3>
+    </div>
+    <div class="comments-list">
+        {% for comment in comments %}
+        <p class="pull-right">
+            <small>{{ comment.date }}</small>
+        </p>
+        <div style=" border-bottom: 1px dotted #ccc;">
+            <div class="media-body">
+                <h5 class="media-heading user_name"><strong>{{ comment.user.user_name }}</strong></h5>
+                <h4>{{ comment.content }}</h4>
+                <ul style="list-style-type: none">
+                    {% for subcomment in comment.comment_set.all %}
+                    <li>
+                        {{ subcomment.user.user_name}}:{{subcomment.content}}<small style="float:right">{{ subcomment.date }}</small>
+                    </li>
+                    {% endfor %}
+                </ul>
+                <p>
+                    <small><a href="{% url 'like' comment.comment_id %}"><span
+                            class="glyphicon glyphicon-thumbs-up"></span> </a>{{ comment.likes }}
+                    </small>
+                    <small><a onclick="reply({{comment.comment_id}})" >reply</a>
+                    </small>
+
+                    <div id="{{comment.comment_id}}"></div>
+
+                </p>
+
+            </div>
+        </div>
+
+        {% endfor %}
+    </div>
+</div>
+<script type="text/javascript" src="../static/js/main.js"></script>
 {% endblock %}

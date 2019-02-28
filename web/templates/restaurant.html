@@ -1,0 +1,31 @@
+{% extends "shared/base.html" %}
+
+{% block content %}
+<h2>Restaurant name:{{ restaurant.name }}</h2>
+<h2>Restaurant category:{{ restaurant.category }}</h2>
+<h2>Restaurant price:{{ restaurant.price }}</h2>
+<h2>Restaurant address:{{ restaurant.address }}</h2>
+
+<table class="table table-hover" style="margin-top: 2%;">
+    <thead>
+    <tr>
+        <th>User</th>
+        <th>Rating</th>
+        <th>Date</th>
+        <th>Price</th>
+        <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for review in reviews %}
+        <tr>
+            <td>{{ review.user.user_name }}</td>
+            <td>{{ review.rating }}</td>
+            <td>{{ review.date }}</td>
+            <td>{{ review.price }}</td>
+            <td><a href="{% url 'detail' review.review_id %}">Detail</a></td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

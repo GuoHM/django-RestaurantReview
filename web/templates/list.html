@@ -29,7 +29,8 @@
             <td>{{ restaurant.category }}</td>
             <td>{{ restaurant.address }}</td>
             <td>{{ restaurant.price }}</td>
-            <td><a href="{% url 'detail' restaurant.name %}">View</a></td>
+            <td><a href="{% url 'review' restaurant.name %}">Review</a></td>
+            <td><a href="{% url 'restaurant' restaurant.name %}">View</a></td>
         </tr>
     {% endfor %}
     </tbody>
